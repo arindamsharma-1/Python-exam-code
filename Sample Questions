@@ -1,0 +1,364 @@
+# ============================================================
+# IMPORTS (use these for all 15-mark questions)
+# ============================================================
+
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+
+# ============================================================
+# SAMPLE QUESTION A (10 MARKS)
+# Check sign, even/odd, divisible by 5
+# ============================================================
+
+def check_number(n):
+    # sign
+    if n > 0:
+        print("Positive")
+    elif n < 0:
+        print("Negative")
+    else:
+        print("Zero")
+
+    # even / odd
+    if n % 2 == 0:
+        print("Even")
+    else:
+        print("Odd")
+
+    # divisible by 5
+    if n % 5 == 0:
+        print("Divisible by 5")
+    else:
+        print("Not divisible by 5")
+
+
+# example calls
+# check_number(15)
+# check_number(-8)
+# check_number(0)
+
+
+# ============================================================
+# SAMPLE QUESTION B (15 MARKS)
+# tips dataset: dtypes, head, describe, histogram of total_bill
+# ============================================================
+
+def analyze_tips():
+    df = sns.load_dataset('tips')
+
+    # dtypes
+    print("DATA TYPES:")
+    print(df.dtypes)
+
+    # first 5 rows
+    print("\nHEAD:")
+    print(df.head())
+
+    # statistics
+    print("\nDESCRIBE:")
+    print(df.describe())
+
+    # histogram
+    sns.histplot(data=df, x='total_bill')
+    plt.title("Histogram of Total Bill")
+    plt.xlabel("Total Bill")
+    plt.ylabel("Frequency")
+    plt.show()
+
+
+# analyze_tips()
+
+
+# ============================================================
+# PRACTICE Q1 (10 MARKS)
+# Check: prime / >50 / perfect square
+# ============================================================
+
+def analyze_number(n):
+    # prime check
+    if n < 2:
+        print("Not prime")
+    else:
+        prime = True
+        for i in range(2, int(n**0.5) + 1):
+            if n % i == 0:
+                prime = False
+                break
+        print("Prime" if prime else "Not prime")
+
+    # > 50
+    if n > 50:
+        print("Greater than 50")
+    else:
+        print("Not greater than 50")
+
+    # perfect square
+    r = int(n**0.5)
+    if r * r == n:
+        print("Perfect square")
+    else:
+        print("Not perfect square")
+
+
+# analyze_number(25)
+
+
+# ============================================================
+# PRACTICE Q2 (10 MARKS)
+# List: filter even numbers and sort descending
+# ============================================================
+
+def filter_and_sort_even(nums):
+    evens = [x for x in nums if x % 2 == 0]
+    evens_sorted = sorted(evens, reverse=True)
+    print("Original:", nums)
+    print("Evens:", evens)
+    print("Sorted evens (desc):", evens_sorted)
+    return evens_sorted
+
+
+# filter_and_sort_even([12, 5, 8, 23, 16, 3, 20, 1, 14])
+
+
+# ============================================================
+# PRACTICE Q3 (15 MARKS)
+# NumPy: random array, stats, multiply by 3
+# ============================================================
+
+def numpy_stats():
+    arr = np.random.randint(10, 50, size=10)
+    print("Array:", arr)
+    print("Mean:", np.mean(arr))
+    print("Median:", np.median(arr))
+    print("Std dev:", np.std(arr))
+    print("Min:", np.min(arr))
+    print("Max:", np.max(arr))
+    print("Array * 3:", arr * 3)
+
+
+# numpy_stats()
+
+
+# ============================================================
+# PRACTICE Q4 (15 MARKS)
+# Pandas: student DataFrame filter + groupby
+# ============================================================
+
+def student_analysis():
+    data = {
+        "Name": ["Alice", "Bob", "Charlie", "David", "Emma", "Frank"],
+        "Age":  [20,      21,    19,        22,      20,     21],
+        "Marks": [85,     78,    92,        67,      88,     75],
+        "Dept": ["CSE",   "ECE", "CSE",     "MECH",  "ECE",  "CSE"]
+    }
+    df = pd.DataFrame(data)
+
+    print("FULL DATAFRAME:")
+    print(df)
+
+    print("\nMarks > 80:")
+    print(df[df["Marks"] > 80])
+
+    print("\nDept == 'CSE':")
+    print(df[df["Dept"] == "CSE"])
+
+    print("\nAverage marks by Dept:")
+    print(df.groupby("Dept")["Marks"].mean())
+
+
+# student_analysis()
+
+
+# ============================================================
+# PRACTICE Q5 (15 MARKS)
+# Iris: stats + boxplot of sepal_length by species
+# ============================================================
+
+def iris_boxplot():
+    df = sns.load_dataset("iris")
+
+    print("Dtypes:")
+    print(df.dtypes)
+
+    print("\nHead:")
+    print(df.head())
+
+    print("\nDescribe:")
+    print(df.describe())
+
+    sns.boxplot(data=df, x="species", y="sepal_length")
+    plt.title("Sepal Length by Species")
+    plt.xlabel("Species")
+    plt.ylabel("Sepal Length")
+    plt.show()
+
+
+# iris_boxplot()
+
+
+# ============================================================
+# PRACTICE Q6 (10 MARKS)
+# String: length > 5, uppercase, contains digit
+# ============================================================
+
+def check_string(s):
+    # length
+    if len(s) > 5:
+        print("Length > 5")
+    else:
+        print("Length <= 5")
+
+    # uppercase
+    if s.isupper():
+        print("All uppercase")
+    else:
+        print("Not all uppercase")
+
+    # contains digit
+    has_digit = any(ch.isdigit() for ch in s)
+    if has_digit:
+        print("Contains digit")
+    else:
+        print("No digit")
+
+
+# check_string("Python123")
+
+
+# ============================================================
+# PRACTICE Q7 (15 MARKS)
+# Titanic: info, missing values, survival by class, countplot
+# ============================================================
+
+def titanic_analysis():
+    df = sns.load_dataset("titanic")
+
+    print("Shape:", df.shape)
+    print("\nDtypes:")
+    print(df.dtypes)
+
+    print("\nMissing values per column:")
+    print(df.isnull().sum())
+
+    print("\nSurvival rate by pclass:")
+    print(df.groupby("pclass")["survived"].mean())
+
+    sns.countplot(data=df, x="pclass", hue="survived")
+    plt.title("Survival Count by Class")
+    plt.xlabel("Passenger Class")
+    plt.ylabel("Count")
+    plt.show()
+
+
+# titanic_analysis()
+
+
+# ============================================================
+# PRACTICE Q8 (10 MARKS)
+# Grade classifier: grade + pass/fail + distinction
+# ============================================================
+
+def classify_grade(marks):
+    if marks >= 90:
+        grade = "A"
+    elif marks >= 75:
+        grade = "B"
+    elif marks >= 60:
+        grade = "C"
+    elif marks >= 40:
+        grade = "D"
+    else:
+        grade = "F"
+
+    print("Marks:", marks, "Grade:", grade)
+
+    if marks >= 40:
+        print("PASS")
+    else:
+        print("FAIL")
+
+    if marks >= 75:
+        print("DISTINCTION")
+    else:
+        print("NO DISTINCTION")
+
+
+# classify_grade(85)
+
+
+# ============================================================
+# PRACTICE Q9 (15 MARKS)
+# tips: stats on tip, tips > 3, histogram
+# ============================================================
+
+def tips_stats():
+    df = sns.load_dataset("tips")
+
+    print("Shape:", df.shape)
+    print("\nColumns:", df.columns.tolist())
+
+    tip_mean = df["tip"].mean()
+    tip_med = df["tip"].median()
+    tip_std = df["tip"].std()
+    tip_min = df["tip"].min()
+    tip_max = df["tip"].max()
+
+    print("\nTip stats:")
+    print("Mean:", tip_mean)
+    print("Median:", tip_med)
+    print("Std:", tip_std)
+    print("Min:", tip_min)
+    print("Max:", tip_max)
+
+    print("\nNumber of tips > 3:", len(df[df["tip"] > 3]))
+
+    sns.histplot(data=df, x="tip", bins=20, kde=True)
+    plt.title("Distribution of Tips")
+    plt.xlabel("Tip Amount")
+    plt.ylabel("Frequency")
+    plt.show()
+
+
+# tips_stats()
+
+
+# ============================================================
+# PRACTICE Q10 (15 MARKS)
+# DataFrame with NaN: detect, fill, drop
+# ============================================================
+
+def missing_values_demo():
+    data = {
+        "StudentID": [1, 2, 3, 4, 5],
+        "Name":      ["Alice", "Bob", "Charlie", "David", "Emma"],
+        "Marks":     [85.0, np.nan, 92.0, 78.0, np.nan],
+        "Attendance":[90.0, 85.0, np.nan, 92.0, 88.0],
+    }
+    df = pd.DataFrame(data)
+
+    print("Original DataFrame:")
+    print(df)
+
+    print("\nIsnull():")
+    print(df.isnull())
+
+    print("\nMissing count per column:")
+    print(df.isnull().sum())
+
+    print("\nFill NaN with 0:")
+    print(df.fillna(0))
+
+    print("\nFill NaN with column mean (Marks and Attendance):")
+    df2 = df.copy()
+    df2["Marks"] = df2["Marks"].fillna(df2["Marks"].mean())
+    df2["Attendance"] = df2["Attendance"].fillna(df2["Attendance"].mean())
+    print(df2)
+
+    print("\nDrop rows with any NaN:")
+    print(df.dropna())
+
+
+# missing_values_demo()
